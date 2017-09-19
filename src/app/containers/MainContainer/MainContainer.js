@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { handleFetchCategoryList } from 'app/redux/creators/CategoryActionCreator'
 import { PostListContainer, PostDetailContainer } from 'app/containers';
 import { Menu, Container, Breadcrumb, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { Loading } from 'app/components'
 import './style.css'
 
 class MainContainer extends Component {
-  componentDidMount () {
-    console.log('Props from Main Container: ', this.props)
+  async componentDidMount () {
+    await this.props.handleFetchCategoryList()
   }
+
+  handleCategoryChange = (event, data) => {
+    this.props.history.push(`/${data.value}`)
+  }
+
   render () {
     const content = (
       <Switch>
@@ -19,43 +27,52 @@ class MainContainer extends Component {
       </Switch>
     )
 
-    const categoryList = [
-      {
-        text: 'React',
-        value: 'react',
-      },
-      {
-        text: 'Redux',
-        value: 'redux',
-      },
-      {
-        text: 'Udacity',
-        value: 'udacity',
-      },
-    ]
-
-    return (
-      <div className='app'>
-        <Menu size='massive' inverted attached>
-          <Menu.Item link>
-            <Link to='/'>Readable</Link>
-          </Menu.Item>
-        </Menu>
-        <Container text className='readable-container'>
-          <Breadcrumb>
-            <Breadcrumb.Section>
-              <Link to='/'>Home</Link>
-            </Breadcrumb.Section>
-            <Breadcrumb.Divider icon='right angle' />
-            <Breadcrumb.Section active>
-              <Dropdown placeholder='Select Category' selection options={categoryList} />
-            </Breadcrumb.Section>
-          </Breadcrumb>
-          { content }
-        </Container>
-      </div>
-    )
+    return this.props.isLoading
+      ? <Loading />
+      : (
+          <div className='app'>
+            <Menu size='massive' inverted attached>
+              <Menu.Item link>
+                <Link to='/'>Readable</Link>
+              </Menu.Item>
+            </Menu>
+            <Container text className='readable-container'>
+              <Breadcrumb>
+                <Breadcrumb.Section>
+                  <Link to='/'>Home</Link>
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon='right angle' />
+                <Breadcrumb.Section active>
+                  <Dropdown
+                    onChange={this.handleCategoryChange}
+                    placeholder='Select Category'
+                    selection
+                    options={this.props.categoryList.toJS()}
+                    value={this.props.selectedCategory} />
+                </Breadcrumb.Section>
+              </Breadcrumb>
+              { content }
+            </Container>
+          </div>
+        )
   }
 }
 
-export default MainContainer
+function mapStateToProps ({CategoryReducer}) {
+  return {
+    isLoading: CategoryReducer.get('isLoading'),
+    categoryList: CategoryReducer.get('categoryList').map(cat => ({
+      text: cat.name,
+      value: cat.path,
+    })),
+    selectedCategory: CategoryReducer.get('selectedCategory'),
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    handleFetchCategoryList: () => dispatch(handleFetchCategoryList()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer)
