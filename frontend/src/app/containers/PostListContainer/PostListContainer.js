@@ -4,11 +4,17 @@ import {
   setSelectedCategory,
   unsetSelectedCategory,
 } from 'app/redux/actions/CategoryActions'
-import { PostList } from 'app/components'
+import {
+  setFilteredPostCategory,
+  unsetFilteredPostCategory
+} from 'app/redux/actions/PostActions'
+import { handleFetchPostList } from 'app/redux/creators/PostActionCreator'
+import { Loading, PostList } from 'app/components'
 
 class PostListContainer extends Component {
   componentDidMount () {
     this.updateSelectedCategory()
+    this.props.handleFetchPostList()
   }
 
   componentDidUpdate (prevProps) {
@@ -20,23 +26,41 @@ class PostListContainer extends Component {
   updateSelectedCategory = () => {
     if (typeof(this.props.match.params.categoryId) !== 'undefined') {
       this.props.setSelectedCategory(this.props.match.params.categoryId)
+      this.props.setFilteredPostCategory(this.props.match.params.categoryId)
     } else {
       this.props.unsetSelectedCategory()
+      this.props.unsetFilteredPostCategory()
     }
   }
 
   render () {
-    return (
-      <PostList />
-    )
+    const posts = typeof(this.props.match.params.categoryId) === 'undefined'
+      ? this.props.posts.valueSeq()
+      : this.props.filteredPosts.valueSeq()
+
+    return this.props.isLoading
+      ? <Loading />
+      : <PostList
+          posts={posts} />
   }
+}
+
+function mapStateToProps ({ PostReducer }) {
+  return {
+    isLoading: PostReducer.get('isLoading'),
+    posts: PostReducer.get('postList'),
+    filteredPosts: PostReducer.get('filteredPostList'),
+  }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     setSelectedCategory: (selectedCategory) => dispatch(setSelectedCategory(selectedCategory)),
     unsetSelectedCategory: () => dispatch(unsetSelectedCategory()),
+    setFilteredPostCategory: (categoryId) => dispatch(setFilteredPostCategory(categoryId)),
+    unsetFilteredPostCategory: () => dispatch(unsetFilteredPostCategory()),
+    handleFetchPostList: () => dispatch(handleFetchPostList()),
   }
 }
 
-export default connect(null, mapDispatchToProps)(PostListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(PostListContainer)
