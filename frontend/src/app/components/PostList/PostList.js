@@ -1,14 +1,25 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import { PostEntryContainer } from 'app/containers'
+
+const styles = {
+  listContainer: {
+    listStyle: 'none',
+  },
+  listItem: {
+    marginBottom: '10px',
+  },
+}
 
 export default function PostList (props) {
   return (
     <div>
       <h2>Post List</h2>
 
-      <ul>
+      <ul style={styles.listContainer}>
         {props.posts.map(post => (
-          <li key={post.get('id')}>{post.get('title')}</li>
+          <li style={styles.listItem} key={post.get('id')}>
+            <PostEntryContainer entry={post} />
+          </li>
         ))}
       </ul>
     </div>

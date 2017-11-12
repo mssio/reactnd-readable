@@ -14,7 +14,7 @@ const initialState = Map({
   filteredPostList: Map({}),
 })
 
-export default function category (state = initialState, action) {
+export default function post (state = initialState, action) {
   switch (action.type) {
     case FETCHING_POST_LIST:
       return state.merge({
@@ -23,7 +23,8 @@ export default function category (state = initialState, action) {
     case FETCHING_POST_LIST_SUCCESS:
       return state.merge({
         isLoading: false,
-        postList: action.postList
+        listError: '',
+        postList: action.postList,
       })
     case FETCHING_POST_LIST_ERROR:
       return state.merge({

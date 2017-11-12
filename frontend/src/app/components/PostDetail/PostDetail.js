@@ -1,7 +1,11 @@
 import React from 'react';
+import { PostEntryContainer } from 'app/containers'
 
-export default function PostDetail () {
+export default function PostDetail ({ post }) {
   return (
-    <h2>Post Detail</h2>
+    <div>
+      <h2>Post Detail</h2>
+      <PostEntryContainer entry={post} />
+    </div>
   );
 }

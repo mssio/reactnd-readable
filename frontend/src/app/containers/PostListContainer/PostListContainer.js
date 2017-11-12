@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  setSelectedCategory,
-  unsetSelectedCategory,
-} from 'app/redux/actions/CategoryActions'
-import {
   setFilteredPostCategory,
   unsetFilteredPostCategory
 } from 'app/redux/actions/PostActions'
@@ -25,10 +21,8 @@ class PostListContainer extends Component {
 
   updateSelectedCategory = () => {
     if (typeof(this.props.match.params.categoryId) !== 'undefined') {
-      this.props.setSelectedCategory(this.props.match.params.categoryId)
       this.props.setFilteredPostCategory(this.props.match.params.categoryId)
     } else {
-      this.props.unsetSelectedCategory()
       this.props.unsetFilteredPostCategory()
     }
   }
@@ -55,8 +49,6 @@ function mapStateToProps ({ PostReducer }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    setSelectedCategory: (selectedCategory) => dispatch(setSelectedCategory(selectedCategory)),
-    unsetSelectedCategory: () => dispatch(unsetSelectedCategory()),
     setFilteredPostCategory: (categoryId) => dispatch(setFilteredPostCategory(categoryId)),
     unsetFilteredPostCategory: () => dispatch(unsetFilteredPostCategory()),
     handleFetchPostList: () => dispatch(handleFetchPostList()),
