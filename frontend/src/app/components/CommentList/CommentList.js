@@ -14,7 +14,6 @@ export default function CommentList ({ comments }) {
       <h3 className="ui dividing header">Comments</h3>
 
       {comments.map(comment => {
-        console.log(comment)
         return (
           <div key={comment.get('id')}>
             <CommentEntryContainer entry={comment} />

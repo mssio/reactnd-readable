@@ -39,7 +39,7 @@ export default function CommentEntry (props) {
         </button>
       </div>
       <div className="content">
-        <a className="author">{entry.get('author')}</a>
+        <span className="author">{entry.get('author')}</span>
         <div className="metadata">
           <span className="date">{moment(entry.get('timestamp')).fromNow()}</span>
         </div>
