@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { handleFetchPostList } from 'app/redux/creators/PostActionCreator'
-import { PostDetail } from 'app/components';
+import { Loading, PostDetail } from 'app/components';
 
 class PostDetailContainer extends Component {
   componentWillMount () {
     this.postId = this.props.match.params.postId
   }
 
-  async componentDidMount () {
-    if (!this.props.posts.has(this.postId)) {
-      await this.props.handleFetchPostList()
-      if (!this.props.posts.has(this.postId)) {
-        this.props.history.push('/404')
-      }
+  componentDidMount () {
+    if (!this.props.isFetched && !this.props.posts.has(this.postId)) {
+      this.props.handleFetchPostList()
+    } else if (this.props.isFetched && !this.props.posts.has(this.postId)) {
+      this.props.history.push('/404')
     }
   }
+
   render () {
-    return (
-      <PostDetail
+    return this.props.isLoading
+      ? <Loading />
+      : <PostDetail
         post={this.props.posts.get(this.postId)} />
-    );
   }
 }
 
 function mapStateToProps ({ PostReducer }) {
   return {
-    isLoading: PostReducer.get('isLoading'),
+    isLoading: PostReducer.get('isLoading') || !PostReducer.get('isFetched'),
+    isFetched: PostReducer.get('isFetched'),
     posts: PostReducer.get('postList'),
   }
 }

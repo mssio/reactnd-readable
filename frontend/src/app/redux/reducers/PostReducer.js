@@ -9,6 +9,7 @@ import {
 
 const initialState = Map({
   isLoading: true,
+  isFetched: false,
   listError: '',
   postList: Map({}),
   filteredPostList: Map({}),
@@ -23,6 +24,7 @@ export default function post (state = initialState, action) {
     case FETCHING_POST_LIST_SUCCESS:
       return state.merge({
         isLoading: false,
+        isFetched: true,
         listError: '',
         postList: action.postList,
       })

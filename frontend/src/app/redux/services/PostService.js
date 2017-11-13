@@ -9,16 +9,8 @@ export function svcFetchAllPosts () {
   }).then(res => res.data)
 }
 
-export function svcFetchPostsByCategory (categoryId) {
-  return axios.get(`${readableApiUrl}/${categoryId}/posts`, {
-    headers: {
-      Authorization: 'Hello world!'
-    }
-  }).then(res => res.data)
-}
-
-export function svcFetchPost (postId) {
-  return axios.get(`${readableApiUrl}/posts/${postId}`, {
+export function svcFetchPostComments (postId) {
+  return axios.get(`${readableApiUrl}/posts/${postId}/comments`, {
     headers: {
       Authorization: 'Hello world!'
     }
