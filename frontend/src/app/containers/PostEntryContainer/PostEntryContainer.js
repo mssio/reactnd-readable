@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { PostEntry } from 'app/components'
 
+const { object } = PropTypes
+
 class PostEntryContainer extends Component {
+  static propTypes = {
+    entry: object.isRequired,
+  }
+
   state = {
     isUpvoteDisabled: false,
     isDownvoteDisabled: false,

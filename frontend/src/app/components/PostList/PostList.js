@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { PostEntryContainer } from 'app/containers'
 
 const styles = {
@@ -10,13 +11,19 @@ const styles = {
   },
 }
 
-export default function PostList (props) {
+const { object } = PropTypes
+
+PostList.propTypes = {
+  posts: object.isRequired,
+}
+
+export default function PostList ({ posts }) {
   return (
     <div>
       <h2>Post List</h2>
 
       <ul style={styles.listContainer}>
-        {props.posts.map(post => (
+        {posts.map(post => (
           <li style={styles.listItem} key={post.get('id')}>
             <PostEntryContainer entry={post} />
           </li>

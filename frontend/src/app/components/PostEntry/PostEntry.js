@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import pluralize from 'pluralize'
 import { Link } from 'react-router-dom'
@@ -7,6 +8,16 @@ const styles = {
   extraContentText: {
     marginRight: '8px',
   }
+}
+
+const { object, bool, func } = PropTypes
+
+PostEntry.propTypes = {
+  entry: object.isRequired,
+  isUpvoteDisabled: bool.isRequired,
+  isDownvoteDisabled: bool.isRequired,
+  onUpvote: func.isRequired,
+  onDownvote: func.isRequired,
 }
 
 export default function PostEntry (props) {
