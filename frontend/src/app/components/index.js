@@ -1,3 +1,4 @@
+import LoginDialogComponent from './LoginDialog/LoginDialog'
 import PostListComponent from './PostList/PostList'
 import PostDetailComponent from './PostDetail/PostDetail'
 import PostEntryComponent from './PostEntry/PostEntry'
@@ -6,6 +7,7 @@ import LoadingComponent from './Loading/Loading'
 import CommentListComponent from './CommentList/CommentList'
 import CommentEntryComponent from './CommentEntry/CommentEntry'
 
+export const LoginDialog = LoginDialogComponent
 export const PostList = PostListComponent
 export const PostDetail = PostDetailComponent
 export const PostEntry = PostEntryComponent
