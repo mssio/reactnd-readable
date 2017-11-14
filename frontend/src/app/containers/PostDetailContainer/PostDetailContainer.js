@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { handleFetchPostList } from 'app/redux/creators/PostActionCreator'
-import { Loading, PostDetail } from 'app/components';
+import { Loading, PostDetail } from 'app/components'
 
 class PostDetailContainer extends Component {
   componentWillMount () {
@@ -17,10 +18,14 @@ class PostDetailContainer extends Component {
   }
 
   render () {
-    return this.props.isLoading
-      ? <Loading />
-      : <PostDetail
-        post={this.props.posts.get(this.postId)} />
+    if (this.props.isFetched && !this.props.posts.has(this.postId)) {
+      return <Redirect to='/404' />
+    } else {
+      return this.props.isLoading
+        ? <Loading />
+        : <PostDetail
+          post={this.props.posts.get(this.postId)} />
+    }
   }
 }
 
