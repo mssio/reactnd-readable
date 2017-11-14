@@ -21,6 +21,14 @@ export const DELETING_POST = 'DELETING_POST'
 export const DELETING_POST_SUCCESS = 'DELETING_POST_SUCCESS'
 export const DELETING_POST_ERROR = 'DELETING_POST_ERROR'
 
+export const VOTING_UP_POST = 'VOTING_UP_POST'
+export const VOTING_UP_POST_SUCCESS = 'VOTING_UP_POST_SUCCESS'
+export const VOTING_UP_POST_ERROR = 'VOTING_UP_POST_ERROR'
+
+export const VOTING_DOWN_POST = 'VOTING_DOWN_POST'
+export const VOTING_DOWN_POST_SUCCESS = 'VOTING_DOWN_POST_SUCCESS'
+export const VOTING_DOWN_POST_ERROR = 'VOTING_DOWN_POST_ERROR'
+
 export function fetchingPostList () {
   return {
     type: FETCHING_POST_LIST,
@@ -122,6 +130,44 @@ export function deletingPostError (error) {
   console.warn('Deleting post failed!')
   return {
     type: DELETING_POST_ERROR,
+    error,
+  }
+}
+
+export function votingUpPost () {
+  return {
+    type: VOTING_UP_POST,
+  }
+}
+export function votingUpPostSuccess (post) {
+  return {
+    type: VOTING_UP_POST_SUCCESS,
+    post
+  }
+}
+export function votingUpPostError (error) {
+  console.warn('Voting up post failed!')
+  return {
+    type: VOTING_UP_POST_ERROR,
+    error,
+  }
+}
+
+export function votingDownPost () {
+  return {
+    type: VOTING_DOWN_POST,
+  }
+}
+export function votingDownPostSuccess (post) {
+  return {
+    type: VOTING_DOWN_POST_SUCCESS,
+    post,
+  }
+}
+export function votingDownPostError (error) {
+  console.warn('Voting down post failed!')
+  return {
+    type: VOTING_DOWN_POST_ERROR,
     error,
   }
 }

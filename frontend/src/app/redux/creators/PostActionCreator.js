@@ -12,12 +12,20 @@ import {
   deletingPost,
   deletingPostSuccess,
   deletingPostError,
+  votingUpPost,
+  votingUpPostSuccess,
+  votingUpPostError,
+  votingDownPost,
+  votingDownPostSuccess,
+  votingDownPostError,
 } from '../actions/PostActions'
 import {
   svcFetchAllPosts,
   svcCreatePost,
   svcUpdatePost,
   svcDeletePost,
+  svcUpVotePost,
+  svcDownVotePost,
 } from '../services/PostService'
 
 export function handleFetchPostList () {
@@ -75,6 +83,31 @@ export function handleDeletePost (postId) {
       dispatch(deletingPostSuccess(postId))
     } catch (err) {
       dispatch(deletingPostError(err))
+    }
+  }
+}
+
+export function handleVoteUpPost (postId) {
+  return async function (dispatch) {
+    dispatch(votingUpPost())
+
+    try {
+      const post = await svcUpVotePost(postId)
+      dispatch(votingUpPostSuccess(post))
+    } catch (err) {
+      dispatch(votingUpPostError(err))
+    }
+  }
+}
+export function handleVoteDownPost (postId) {
+  return async function (dispatch) {
+    dispatch(votingDownPost())
+
+    try {
+      const post = await svcDownVotePost(postId)
+      dispatch(votingDownPostSuccess(post))
+    } catch (err) {
+      dispatch(votingDownPostError(err))
     }
   }
 }

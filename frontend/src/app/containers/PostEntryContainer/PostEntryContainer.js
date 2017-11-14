@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { openEditPost } from 'app/redux/actions/PostActions'
-import { handleDeletePost } from 'app/redux/creators/PostActionCreator'
+import {
+  handleDeletePost,
+  handleVoteUpPost,
+  handleVoteDownPost,
+} from 'app/redux/creators/PostActionCreator'
 import { PostEntry } from 'app/components'
 
 const { object } = PropTypes
@@ -18,16 +22,20 @@ class PostEntryContainer extends Component {
   }
 
   handleUpvote = () => {
-    this.setState({
-      isUpvoteDisabled: true,
-      isDownvoteDisabled: false,
-    })
+    // not working anymore
+    // this.setState({
+    //   isUpvoteDisabled: true,
+    //   isDownvoteDisabled: false,
+    // })
+    this.props.handleVoteUpPost(this.props.entry.get('id'))
   }
   handleDownvote = () => {
-    this.setState({
-      isUpvoteDisabled: false,
-      isDownvoteDisabled: true,
-    })
+    // not working anymore
+    // this.setState({
+    //   isUpvoteDisabled: false,
+    //   isDownvoteDisabled: true,
+    // })
+    this.props.handleVoteDownPost(this.props.entry.get('id'))
   }
 
   handleOpenEditPost = () => {
@@ -67,6 +75,8 @@ function mapDispatchToProps (dispatch) {
   return {
     onOpenEditPost: (post) => dispatch(openEditPost(post)),
     handleDeletePost: (postId) => dispatch(handleDeletePost(postId)),
+    handleVoteUpPost: (postId) => dispatch(handleVoteUpPost(postId)),
+    handleVoteDownPost: (postId) => dispatch(handleVoteDownPost(postId)),
   }
 }
 

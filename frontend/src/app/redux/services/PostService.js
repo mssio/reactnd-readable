@@ -30,6 +30,20 @@ export function svcDeletePost (postId) {
     }
   })
 }
+export function svcUpVotePost (postId) {
+  return axios.post(`${readableApiUrl}/posts/${postId}`, {option: 'upVote'}, {
+    headers: {
+      Authorization: 'whatever-you-want'
+    }
+  }).then(res => res.data)
+}
+export function svcDownVotePost (postId) {
+  return axios.post(`${readableApiUrl}/posts/${postId}`, {option: 'downVote'}, {
+    headers: {
+      Authorization: 'whatever-you-want'
+    }
+  }).then(res => res.data)
+}
 
 export function svcFetchPostComments (postId) {
   return axios.get(`${readableApiUrl}/posts/${postId}/comments`, {

@@ -17,6 +17,12 @@ import {
   DELETING_POST,
   DELETING_POST_SUCCESS,
   DELETING_POST_ERROR,
+  VOTING_UP_POST,
+  VOTING_UP_POST_SUCCESS,
+  VOTING_UP_POST_ERROR,
+  VOTING_DOWN_POST,
+  VOTING_DOWN_POST_SUCCESS,
+  VOTING_DOWN_POST_ERROR,
 } from '../actions/PostActions'
 
 const initialState = Map({
@@ -26,6 +32,8 @@ const initialState = Map({
   createError: '',
   updateError: '',
   deleteError: '',
+  votingUpError: '',
+  votingDownError: '',
   postList: Map({}),
   filteredPostCategory: '',
   filteredPostList: Map({}),
@@ -37,6 +45,23 @@ const initialState = Map({
     post: Map({}),
   }),
 })
+
+function updateFilteredPostList (filteredPostState, post) {
+  let updatedFilteredPostList
+
+  if (filteredPostState.has(post.id)) {
+    const oldPost = filteredPostState.get(post.id)
+    if (post.category === oldPost.get('category')) {
+      updatedFilteredPostList = filteredPostState.set(post.id, Map(post))
+    } else {
+      updatedFilteredPostList = filteredPostState.delete(post.id)
+    }
+  } else {
+    updatedFilteredPostList = filteredPostState
+  }
+
+  return updatedFilteredPostList
+}
 
 export default function post (state = initialState, action) {
   switch (action.type) {
@@ -121,23 +146,11 @@ export default function post (state = initialState, action) {
         isLoading: true,
       })
     case UPDATING_POST_SUCCESS:
-      let updatedFilteredPostList
-      if (state.get('filteredPostList').has(action.post.id)) {
-        const oldPost = state.get('filteredPostList').get(action.post.id)
-        if (action.post.category === oldPost.get('category')) {
-          updatedFilteredPostList = state.get('filteredPostList').set(action.post.id, Map(action.post))
-        } else {
-          updatedFilteredPostList = state.get('filteredPostList').delete(action.post.id)
-        }
-      } else {
-        updatedFilteredPostList = state.get('filteredPostList')
-      }
-
       return state.merge({
         isLoading: false,
         updateError: '',
         postList: state.get('postList').set(action.post.id, Map(action.post)),
-        filteredPostList: updatedFilteredPostList,
+        filteredPostList: updateFilteredPostList(state.get('filteredPostList'), action.post),
       })
     case UPDATING_POST_ERROR:
       return state.merge({
@@ -159,6 +172,38 @@ export default function post (state = initialState, action) {
       return state.merge({
         isLoading: false,
         deleteError: action.error,
+      })
+    case VOTING_UP_POST:
+      return state.merge({
+        isLoading: true,
+      })
+    case VOTING_UP_POST_SUCCESS:
+      return state.merge({
+        isLoading: false,
+        votingUpError: '',
+        postList: state.get('postList').set(action.post.id, Map(action.post)),
+        filteredPostList: updateFilteredPostList(state.get('filteredPostList'), action.post),
+      })
+    case VOTING_UP_POST_ERROR:
+      return state.merge({
+        isLoading: false,
+        votingUpError: action.error,
+      })
+    case VOTING_DOWN_POST:
+      return state.merge({
+        isLoading: true,
+      })
+    case VOTING_DOWN_POST_SUCCESS:
+      return state.merge({
+        isLoading: false,
+        votingDownError: '',
+        postList: state.get('postList').set(action.post.id, Map(action.post)),
+        filteredPostList: updateFilteredPostList(state.get('filteredPostList'), action.post),
+      })
+    case VOTING_DOWN_POST_ERROR:
+      return state.merge({
+        isLoading: false,
+        votingDownError: action.error,
       })
     default:
       return state
