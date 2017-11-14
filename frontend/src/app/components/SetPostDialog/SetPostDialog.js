@@ -73,9 +73,13 @@ class SetPostDialog extends Component {
   }
 
   render () {
+    const title = this.props.mode === 'create'
+      ? 'New Post'
+      : 'Edit Post'
+
     return (
       <Modal open={this.props.isOpen}>
-        <Modal.Header>New Post</Modal.Header>
+        <Modal.Header>{title}</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <Form onSubmit={this.handleSubmit}>
