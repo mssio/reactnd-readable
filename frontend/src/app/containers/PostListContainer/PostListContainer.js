@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import {
   setFilteredPostCategory,
   unsetFilteredPostCategory,
-  openSetPost,
+  openNewPost,
 } from 'app/redux/actions/PostActions'
 import { handleFetchPostList } from 'app/redux/creators/PostActionCreator'
-import { SetPostDialogContainer } from 'app/containers'
 import { Loading, PostList } from 'app/components'
 
 class PostListContainer extends Component {
@@ -30,8 +29,8 @@ class PostListContainer extends Component {
   }
 
   postSorter (a, b) {
-    if (a.timestamp < b.timestamp) return -1
-    else return 1
+    if (a.get('timestamp') < b.get('timestamp')) return 1
+    else return -1
   }
 
   render () {
@@ -41,13 +40,7 @@ class PostListContainer extends Component {
 
     return this.props.isLoading
       ? <Loading />
-      : (
-        <div>
-          <PostList posts={posts} onOpenSetPost={this.props.onOpenSetPost} />
-          <SetPostDialogContainer
-            mode='create' />
-        </div>
-      )
+      : <PostList posts={posts} onOpenNewPost={this.props.onOpenNewPost} />
   }
 }
 
@@ -64,7 +57,7 @@ function mapDispatchToProps (dispatch) {
     setFilteredPostCategory: (categoryId) => dispatch(setFilteredPostCategory(categoryId)),
     unsetFilteredPostCategory: () => dispatch(unsetFilteredPostCategory()),
     handleFetchPostList: () => dispatch(handleFetchPostList()),
-    onOpenSetPost: (postId = '') => dispatch(openSetPost(postId)),
+    onOpenNewPost: () => dispatch(openNewPost()),
   }
 }
 

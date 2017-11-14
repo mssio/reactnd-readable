@@ -5,7 +5,8 @@ export const FETCHING_POST_LIST_ERROR = 'FETCHING_POST_LIST_ERROR'
 export const SET_FILTERED_POST_CATEGORY = 'SET_FILTERED_POST_CATEGORY'
 export const UNSET_FILTERED_POST_CATEGORY = 'UNSET_FILTERED_POST_CATEGORY'
 
-export const OPEN_SET_POST = 'OPEN_SET_POST'
+export const OPEN_NEW_POST = 'OPEN_NEW_POST'
+export const OPEN_EDIT_POST = 'OPEN_EDIT_POST'
 export const CLOSE_SET_POST = 'CLOSE_SET_POST'
 
 export const CREATING_POST = 'CREATING_POST'
@@ -43,10 +44,15 @@ export function unsetFilteredPostCategory () {
   }
 }
 
-export function openSetPost (postId = '') {
+export function openNewPost () {
   return {
-    type: OPEN_SET_POST,
-    postId,
+    type: OPEN_NEW_POST,
+  }
+}
+export function openEditPost (post) {
+  return {
+    type: OPEN_EDIT_POST,
+    post,
   }
 }
 export function closeSetPost () {

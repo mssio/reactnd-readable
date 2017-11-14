@@ -17,7 +17,7 @@ const { object, func } = PropTypes
 
 PostList.propTypes = {
   posts: object.isRequired,
-  onOpenSetPost: func.isRequired,
+  onOpenNewPost: func.isRequired,
 }
 
 export default function PostList (props) {
@@ -25,7 +25,7 @@ export default function PostList (props) {
     <div>
       <h2>Post List</h2>
 
-      <Button primary content='New Post' onClick={props.onOpenSetPost} />
+      <Button primary content='New Post' onClick={props.onOpenNewPost} />
 
       <ul style={styles.listContainer}>
         {props.posts.map(post => (

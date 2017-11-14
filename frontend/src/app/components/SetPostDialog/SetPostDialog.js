@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Modal, Form, Dropdown, Button } from 'semantic-ui-react'
-import { isEmpty } from 'app/utils/common'
+import { notNull } from 'app/utils/common'
 
 const { bool, object, func } = PropTypes
 
@@ -21,13 +21,11 @@ class SetPostDialog extends Component {
   }
 
   componentWillMount () {
-    if (!isEmpty(this.props.post)) {
-      this.setState({
-        category: this.props.post.get('category'),
-        title: this.props.post.get('title'),
-        body: this.props.post.get('body'),
-      })
-    }
+    this.setState({
+      category: this.props.post.get('category') || 'react',
+      title: notNull(this.props.post.get('title')),
+      body: notNull(this.props.post.get('body')),
+    })
   }
 
   componentDidMount () {

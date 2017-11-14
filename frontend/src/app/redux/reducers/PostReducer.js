@@ -5,7 +5,8 @@ import {
   FETCHING_POST_LIST_ERROR,
   SET_FILTERED_POST_CATEGORY,
   UNSET_FILTERED_POST_CATEGORY,
-  OPEN_SET_POST,
+  OPEN_NEW_POST,
+  OPEN_EDIT_POST,
   CLOSE_SET_POST,
   CREATING_POST,
   CREATING_POST_SUCCESS,
@@ -22,6 +23,11 @@ const initialState = Map({
   filteredPostList: Map({}),
   isOpenSetPost: false,
   setPostId: '',
+  postDialog: Map({
+    isOpen: false,
+    mode: '',
+    post: Map({}),
+  }),
 })
 
 export default function post (state = initialState, action) {
@@ -58,14 +64,24 @@ export default function post (state = initialState, action) {
       return state.merge({
         filteredPostList: Map({})
       })
-    case OPEN_SET_POST:
+    case OPEN_NEW_POST:
       return state.merge({
-        isOpenSetPost: true,
-        setPostId: action.postId,
+        postDialog: Map({
+          isOpen: true,
+          mode: 'create',
+        })
+      })
+    case OPEN_EDIT_POST:
+      return state.merge({
+        postDialog: Map({
+          isOpen: true,
+          mode: 'update',
+          post: action.post,
+        })
       })
     case CLOSE_SET_POST:
       return state.merge({
-        isOpenSetPost: false,
+        postDialog: initialState.get('postDialog'),
       })
     case CREATING_POST:
       return state.merge({
@@ -80,7 +96,7 @@ export default function post (state = initialState, action) {
       } else {
         newFilteredPostList = state.get('filteredPostList')
       }
-      
+
       return state.merge({
         isLoading: false,
         createError: '',

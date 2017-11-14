@@ -10,3 +10,7 @@ export function isEmpty(input) {
 export function getUnixTimestamp () {
   return Date.now()
 }
+
+export function notNull (input, replace = '') {
+  return typeof(input) === 'undefined' || input === null ? replace : input
+}
