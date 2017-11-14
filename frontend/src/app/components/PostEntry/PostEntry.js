@@ -18,10 +18,17 @@ PostEntry.propTypes = {
   isDownvoteDisabled: bool.isRequired,
   onUpvote: func.isRequired,
   onDownvote: func.isRequired,
+  isEditable: bool.isRequired,
 }
 
 export default function PostEntry (props) {
   const { entry } = props
+
+  const editLink = props.isEditable
+    ? <span style={styles.extraContentText}>
+        <Link to={`/${entry.get('category')}/${entry.get('id')}/edit`}>Edit</Link>
+      </span>
+    : null
 
   return (
     <div className="ui fluid card">
@@ -50,6 +57,7 @@ export default function PostEntry (props) {
           <span style={styles.extraContentText}>
             {pluralize('Comments', entry.get('commentCount'), true)}
           </span>
+          {editLink}
         </span>
         <span className="right floated author">
           {entry.get('author')}

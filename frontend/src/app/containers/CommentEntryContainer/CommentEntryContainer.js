@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { CommentEntry } from 'app/components'
 
 const { object } = PropTypes
@@ -28,15 +29,24 @@ class CommentEntryContainer extends Component {
   }
 
   render () {
+    const isEditable = this.props.username === this.props.entry.get('author')
+
     return (
       <CommentEntry
         entry={this.props.entry}
         isUpvoteDisabled={this.state.isUpvoteDisabled}
         isDownvoteDisabled={this.state.isDownvoteDisabled}
         onUpvote={this.handleUpvote}
-        onDownvote={this.handleDownvote} />
+        onDownvote={this.handleDownvote}
+        isEditable={isEditable} />
     )
   }
 }
 
-export default CommentEntryContainer
+function mapStateToProps ({ UserReducer }) {
+  return {
+    username: UserReducer.get('username'),
+  }
+}
+
+export default connect(mapStateToProps)(CommentEntryContainer)

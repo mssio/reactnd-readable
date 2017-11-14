@@ -11,7 +11,8 @@ const styles = {
     marginBottom: '5px',
   },
   vote: {
-    color: 'rgba(0,0,0,.4)'
+    color: 'rgba(0,0,0,.4)',
+    marginRight: '6px',
   }
 }
 
@@ -23,10 +24,14 @@ CommentEntry.propTypes = {
   isDownvoteDisabled: bool.isRequired,
   onUpvote: func.isRequired,
   onDownvote: func.isRequired,
+  isEditable: bool.isRequired,
 }
 
 export default function CommentEntry (props) {
   const { entry } = props
+  const editLink = props.isEditable
+    ? <a className='reply'>Edit</a>
+    : null
 
   return (
     <div style={styles.comment} className="comment">
@@ -48,6 +53,7 @@ export default function CommentEntry (props) {
         </div>
         <div className="actions">
           <span style={styles.vote}>{pluralize('Votes', entry.get('voteScore'), true)}</span>
+          {editLink}
         </div>
       </div>
     </div>
