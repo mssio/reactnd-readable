@@ -25,12 +25,17 @@ CommentEntry.propTypes = {
   onUpvote: func.isRequired,
   onDownvote: func.isRequired,
   isEditable: bool.isRequired,
+  onEdit: func.isRequired,
+  onDelete: func.isRequired,
 }
 
 export default function CommentEntry (props) {
   const { entry } = props
   const editLink = props.isEditable
-    ? <a className='reply'>Edit</a>
+    ? <a onClick={props.onEdit} className='reply'>Edit</a>
+    : null
+  const deleteLink = props.isEditable
+    ? <a onClick={props.onDelete} className='reply'>Delete</a>
     : null
 
   return (
@@ -54,6 +59,7 @@ export default function CommentEntry (props) {
         <div className="actions">
           <span style={styles.vote}>{pluralize('Votes', entry.get('voteScore'), true)}</span>
           {editLink}
+          {deleteLink}
         </div>
       </div>
     </div>

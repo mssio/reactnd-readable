@@ -44,11 +44,3 @@ export function svcDownVotePost (postId) {
     }
   }).then(res => res.data)
 }
-
-export function svcFetchPostComments (postId) {
-  return axios.get(`${readableApiUrl}/posts/${postId}/comments`, {
-    headers: {
-      Authorization: 'whatever-you-want'
-    }
-  }).then(res => res.data)
-}

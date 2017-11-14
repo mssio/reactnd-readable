@@ -17,12 +17,12 @@ class SetPostDialogContainer extends Component {
         id: uuidv4(),
       }
 
-      this.props.handleCreatePost(newPost)
+      await this.props.handleCreatePost(newPost)
       this.props.onClose()
 
     } else if (this.props.mode === 'update') {
 
-      this.props.handleUpdatePost(this.props.post.get('id'), payload)
+      await this.props.handleUpdatePost(this.props.post.get('id'), payload)
       this.props.onClose()
 
     }

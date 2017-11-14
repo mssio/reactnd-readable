@@ -7,6 +7,7 @@ import NotFoundComponent from './NotFound/NotFound'
 import LoadingComponent from './Loading/Loading'
 import CommentListComponent from './CommentList/CommentList'
 import CommentEntryComponent from './CommentEntry/CommentEntry'
+import EditCommentDialogComponent from './EditCommentDialog/EditCommentDialog'
 
 export const LoginDialog = LoginDialogComponent
 export const PostList = PostListComponent
@@ -17,3 +18,4 @@ export const NotFound = NotFoundComponent
 export const Loading = LoadingComponent
 export const CommentList = CommentListComponent
 export const CommentEntry = CommentEntryComponent
+export const EditCommentDialog = EditCommentDialogComponent

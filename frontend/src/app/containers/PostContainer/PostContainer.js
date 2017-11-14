@@ -9,8 +9,12 @@ import {
 } from 'app/redux/actions/CategoryActions'
 import { handleFetchCategoryList } from 'app/redux/creators/CategoryActionCreator'
 import { Loading } from 'app/components'
-import { SetPostDialogContainer } from 'app/containers'
-import { PostListContainer, PostDetailContainer } from 'app/containers';
+import {
+  PostListContainer,
+  PostDetailContainer,
+  SetPostDialogContainer,
+  EditCommentDialogContainer,
+} from 'app/containers';
 
 const styles = {
   breadcrumb: {
@@ -72,6 +76,7 @@ class PostContainer extends Component {
           </Breadcrumb>
           { content }
           <SetPostDialogContainer />
+          <EditCommentDialogContainer />
         </div>
     )
   }
