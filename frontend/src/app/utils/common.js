@@ -6,3 +6,7 @@ export function isEmpty(input) {
     || (Array.isArray(input) && input.length === 0)
     || (typeof(input) === 'object' && Object.keys(input).length === 0)
 }
+
+export function getUnixTimestamp () {
+  return Date.now()
+}

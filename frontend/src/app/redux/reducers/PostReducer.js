@@ -5,14 +5,23 @@ import {
   FETCHING_POST_LIST_ERROR,
   SET_FILTERED_POST_CATEGORY,
   UNSET_FILTERED_POST_CATEGORY,
+  OPEN_SET_POST,
+  CLOSE_SET_POST,
+  CREATING_POST,
+  CREATING_POST_SUCCESS,
+  CREATING_POST_ERROR,
 } from '../actions/PostActions'
 
 const initialState = Map({
   isLoading: true,
   isFetched: false,
   listError: '',
+  createError: '',
   postList: Map({}),
+  filteredPostCategory: '',
   filteredPostList: Map({}),
+  isOpenSetPost: false,
+  setPostId: '',
 })
 
 export default function post (state = initialState, action) {
@@ -42,11 +51,46 @@ export default function post (state = initialState, action) {
           return filtered
         }, {})
       return state.merge({
-        filteredPostList: Map(filteredPostList)
+        filteredPostList: Map(filteredPostList),
+        filteredPostCategory: action.categoryId,
       })
     case UNSET_FILTERED_POST_CATEGORY:
       return state.merge({
         filteredPostList: Map({})
+      })
+    case OPEN_SET_POST:
+      return state.merge({
+        isOpenSetPost: true,
+        setPostId: action.postId,
+      })
+    case CLOSE_SET_POST:
+      return state.merge({
+        isOpenSetPost: false,
+      })
+    case CREATING_POST:
+      return state.merge({
+        isLoading: true,
+      })
+    case CREATING_POST_SUCCESS:
+      const newPostList = state.get('postList').set(action.post.id, Map(action.post))
+
+      let newFilteredPostList = Map({})
+      if (action.post.category === state.get('filteredPostCategory')) {
+        newFilteredPostList = state.get('filteredPostList').set(action.post.id, Map(action.post))
+      } else {
+        newFilteredPostList = state.get('filteredPostList')
+      }
+      
+      return state.merge({
+        isLoading: false,
+        createError: '',
+        postList: newPostList,
+        filteredPostList: newFilteredPostList,
+      })
+    case CREATING_POST_ERROR:
+      return state.merge({
+        isLoading: false,
+        createError: action.error,
       })
     default:
       return state

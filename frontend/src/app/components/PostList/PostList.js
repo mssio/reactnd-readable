@@ -13,21 +13,22 @@ const styles = {
   },
 }
 
-const { object } = PropTypes
+const { object, func } = PropTypes
 
 PostList.propTypes = {
   posts: object.isRequired,
+  onOpenSetPost: func.isRequired,
 }
 
-export default function PostList ({ posts }) {
+export default function PostList (props) {
   return (
     <div>
       <h2>Post List</h2>
 
-      <Button primary content='New Post' />
+      <Button primary content='New Post' onClick={props.onOpenSetPost} />
 
       <ul style={styles.listContainer}>
-        {posts.map(post => (
+        {props.posts.map(post => (
           <li style={styles.listItem} key={post.get('id')}>
             <PostEntryContainer entry={post} />
           </li>

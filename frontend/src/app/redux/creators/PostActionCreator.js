@@ -3,8 +3,14 @@ import {
   fetchingPostList,
   fetchingPostListSuccess,
   fetchingPostListError,
+  creatingPost,
+  creatingPostSuccess,
+  creatingPostError,
 } from '../actions/PostActions'
-import { svcFetchAllPosts } from '../services/PostService'
+import {
+  svcFetchAllPosts,
+  svcCreatePost,
+} from '../services/PostService'
 
 export function handleFetchPostList () {
   return async function (dispatch) {
@@ -22,6 +28,19 @@ export function handleFetchPostList () {
       dispatch(fetchingPostListSuccess(normalizedPosts))
     } catch (err) {
       dispatch(fetchingPostListError(err))
+    }
+  }
+}
+
+export function handleCreatePost (postData) {
+  return async function (dispatch) {
+    dispatch(creatingPost())
+
+    try {
+      const post = await svcCreatePost(postData)
+      dispatch(creatingPostSuccess(post))
+    } catch (err) {
+      dispatch(creatingPostError(err))
     }
   }
 }
