@@ -20,6 +20,7 @@ PostEntry.propTypes = {
   onDownvote: func.isRequired,
   isEditable: bool.isRequired,
   onEdit: func.isRequired,
+  onDelete: func.isRequired,
 }
 
 export default function PostEntry (props) {
@@ -28,6 +29,12 @@ export default function PostEntry (props) {
   const editLink = props.isEditable
     ? <span style={styles.extraContentText}>
         <a onClick={props.onEdit}>Edit</a>
+      </span>
+    : null
+
+  const deleteLink = props.isEditable
+    ? <span style={styles.extraContentText}>
+        <a onClick={props.onDelete}>Delete</a>
       </span>
     : null
 
@@ -59,6 +66,7 @@ export default function PostEntry (props) {
             {pluralize('Comments', entry.get('commentCount'), true)}
           </span>
           {editLink}
+          {deleteLink}
         </span>
         <span className="right floated author">
           {entry.get('author')}

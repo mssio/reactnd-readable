@@ -23,6 +23,13 @@ export function svcUpdatePost (postId, postData) {
     }
   }).then(res => res.data)
 }
+export function svcDeletePost (postId) {
+  return axios.delete(`${readableApiUrl}/posts/${postId}`, {
+    headers: {
+      Authorization: 'whatever-you-want'
+    }
+  })
+}
 
 export function svcFetchPostComments (postId) {
   return axios.get(`${readableApiUrl}/posts/${postId}/comments`, {

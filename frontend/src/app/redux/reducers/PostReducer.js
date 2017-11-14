@@ -14,6 +14,9 @@ import {
   UPDATING_POST,
   UPDATING_POST_SUCCESS,
   UPDATING_POST_ERROR,
+  DELETING_POST,
+  DELETING_POST_SUCCESS,
+  DELETING_POST_ERROR,
 } from '../actions/PostActions'
 
 const initialState = Map({
@@ -22,6 +25,7 @@ const initialState = Map({
   listError: '',
   createError: '',
   updateError: '',
+  deleteError: '',
   postList: Map({}),
   filteredPostCategory: '',
   filteredPostList: Map({}),
@@ -139,6 +143,22 @@ export default function post (state = initialState, action) {
       return state.merge({
         isLoading: false,
         updateError: action.error,
+      })
+    case DELETING_POST:
+      return state.merge({
+        isLoading: true,
+      })
+    case DELETING_POST_SUCCESS:
+      return state.merge({
+        isLoading: false,
+        deleteError: '',
+        postList: state.get('postList').delete(action.postId),
+        filteredPostList: state.get('filteredPostList').delete(action.postId),
+      })
+    case DELETING_POST_ERROR:
+      return state.merge({
+        isLoading: false,
+        deleteError: action.error,
       })
     default:
       return state

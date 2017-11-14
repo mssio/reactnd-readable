@@ -9,11 +9,15 @@ import {
   updatingPost,
   updatingPostSuccess,
   updatingPostError,
+  deletingPost,
+  deletingPostSuccess,
+  deletingPostError,
 } from '../actions/PostActions'
 import {
   svcFetchAllPosts,
   svcCreatePost,
   svcUpdatePost,
+  svcDeletePost,
 } from '../services/PostService'
 
 export function handleFetchPostList () {
@@ -58,6 +62,19 @@ export function handleUpdatePost (postId, postData) {
       dispatch(updatingPostSuccess(post))
     } catch (err) {
       dispatch(updatingPostError(err))
+    }
+  }
+}
+
+export function handleDeletePost (postId) {
+  return async function (dispatch) {
+    dispatch(deletingPost())
+
+    try {
+      await svcDeletePost(postId)
+      dispatch(deletingPostSuccess(postId))
+    } catch (err) {
+      dispatch(deletingPostError(err))
     }
   }
 }

@@ -17,6 +17,10 @@ export const UPDATING_POST = 'UPDATING_POST'
 export const UPDATING_POST_SUCCESS = 'UPDATING_POST_SUCCESS'
 export const UPDATING_POST_ERROR = 'UPDATING_POST_ERROR'
 
+export const DELETING_POST = 'DELETING_POST'
+export const DELETING_POST_SUCCESS = 'DELETING_POST_SUCCESS'
+export const DELETING_POST_ERROR = 'DELETING_POST_ERROR'
+
 export function fetchingPostList () {
   return {
     type: FETCHING_POST_LIST,
@@ -99,6 +103,25 @@ export function updatingPostError (error) {
   console.warn('Updating post failed!')
   return {
     type: UPDATING_POST_ERROR,
+    error,
+  }
+}
+
+export function deletingPost () {
+  return {
+    type: DELETING_POST,
+  }
+}
+export function deletingPostSuccess (postId) {
+  return {
+    type: DELETING_POST_SUCCESS,
+    postId,
+  }
+}
+export function deletingPostError (error) {
+  console.warn('Deleting post failed!')
+  return {
+    type: DELETING_POST_ERROR,
     error,
   }
 }

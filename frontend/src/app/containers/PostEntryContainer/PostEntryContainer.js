@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { openEditPost } from 'app/redux/actions/PostActions'
+import { handleDeletePost } from 'app/redux/creators/PostActionCreator'
 import { PostEntry } from 'app/components'
 
 const { object } = PropTypes
@@ -33,6 +34,10 @@ class PostEntryContainer extends Component {
     this.props.onOpenEditPost(this.props.entry)
   }
 
+  handleDeletePost = () => {
+    this.props.handleDeletePost(this.props.entry.get('id'))
+  }
+
   render () {
     const isEditable = this.props.username === this.props.entry.get('author')
 
@@ -45,7 +50,8 @@ class PostEntryContainer extends Component {
           onUpvote={this.handleUpvote}
           onDownvote={this.handleDownvote}
           isEditable={isEditable}
-          onEdit={this.handleOpenEditPost} />
+          onEdit={this.handleOpenEditPost}
+          onDelete={this.handleDeletePost} />
       </div>
     )
   }
@@ -60,6 +66,7 @@ function mapStateToProps ({ UserReducer }) {
 function mapDispatchToProps (dispatch) {
   return {
     onOpenEditPost: (post) => dispatch(openEditPost(post)),
+    handleDeletePost: (postId) => dispatch(handleDeletePost(postId)),
   }
 }
 
