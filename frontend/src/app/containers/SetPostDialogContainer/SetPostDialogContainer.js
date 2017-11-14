@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import uuidv4 from 'uuid/v4'
 import { getUnixTimestamp } from 'app/utils/common'
 import { closeSetPost } from 'app/redux/actions/PostActions'
-import { handleCreatePost } from 'app/redux/creators/PostActionCreator'
+import { handleCreatePost, handleUpdatePost } from 'app/redux/creators/PostActionCreator'
 import { SetPostDialog } from 'app/components'
 
 class SetPostDialogContainer extends Component {
   handleSubmit = async (payload) => {
-    console.log(this.props.mode)
     if (this.props.mode === 'create') {
 
       const newPost = {
@@ -20,14 +19,19 @@ class SetPostDialogContainer extends Component {
 
       this.props.handleCreatePost(newPost)
       this.props.onClose()
+
     } else if (this.props.mode === 'update') {
-      //
+
+      this.props.handleUpdatePost(this.props.post.get('id'), payload)
+      this.props.onClose()
+
     }
   }
 
   render () {
     return (
       <SetPostDialog
+        mode={this.props.mode}
         isOpen={this.props.isOpen}
         onClose={this.props.onClose}
         categoryList={this.props.categoryList}
@@ -54,6 +58,7 @@ function mapDispatchToProps (dispatch) {
   return {
     onClose: () => dispatch(closeSetPost()),
     handleCreatePost: (postData) => dispatch(handleCreatePost(postData)),
+    handleUpdatePost: (postId, postData) => dispatch(handleUpdatePost(postId, postData)),
   }
 }
 

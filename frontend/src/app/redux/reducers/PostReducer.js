@@ -11,6 +11,9 @@ import {
   CREATING_POST,
   CREATING_POST_SUCCESS,
   CREATING_POST_ERROR,
+  UPDATING_POST,
+  UPDATING_POST_SUCCESS,
+  UPDATING_POST_ERROR,
 } from '../actions/PostActions'
 
 const initialState = Map({
@@ -18,6 +21,7 @@ const initialState = Map({
   isFetched: false,
   listError: '',
   createError: '',
+  updateError: '',
   postList: Map({}),
   filteredPostCategory: '',
   filteredPostList: Map({}),
@@ -107,6 +111,34 @@ export default function post (state = initialState, action) {
       return state.merge({
         isLoading: false,
         createError: action.error,
+      })
+    case UPDATING_POST:
+      return state.merge({
+        isLoading: true,
+      })
+    case UPDATING_POST_SUCCESS:
+      let updatedFilteredPostList
+      if (state.get('filteredPostList').has(action.post.id)) {
+        const oldPost = state.get('filteredPostList').get(action.post.id)
+        if (action.post.category === oldPost.get('category')) {
+          updatedFilteredPostList = state.get('filteredPostList').set(action.post.id, Map(action.post))
+        } else {
+          updatedFilteredPostList = state.get('filteredPostList').delete(action.post.id)
+        }
+      } else {
+        updatedFilteredPostList = state.get('filteredPostList')
+      }
+
+      return state.merge({
+        isLoading: false,
+        updateError: '',
+        postList: state.get('postList').set(action.post.id, Map(action.post)),
+        filteredPostList: updatedFilteredPostList,
+      })
+    case UPDATING_POST_ERROR:
+      return state.merge({
+        isLoading: false,
+        updateError: action.error,
       })
     default:
       return state

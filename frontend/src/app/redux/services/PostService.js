@@ -21,7 +21,7 @@ export function svcUpdatePost (postId, postData) {
     headers: {
       Authorization: 'whatever-you-want'
     }
-  })
+  }).then(res => res.data)
 }
 
 export function svcFetchPostComments (postId) {

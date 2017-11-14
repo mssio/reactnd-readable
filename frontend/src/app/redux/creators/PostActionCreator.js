@@ -6,10 +6,14 @@ import {
   creatingPost,
   creatingPostSuccess,
   creatingPostError,
+  updatingPost,
+  updatingPostSuccess,
+  updatingPostError,
 } from '../actions/PostActions'
 import {
   svcFetchAllPosts,
   svcCreatePost,
+  svcUpdatePost,
 } from '../services/PostService'
 
 export function handleFetchPostList () {
@@ -41,6 +45,19 @@ export function handleCreatePost (postData) {
       dispatch(creatingPostSuccess(post))
     } catch (err) {
       dispatch(creatingPostError(err))
+    }
+  }
+}
+
+export function handleUpdatePost (postId, postData) {
+  return async function (dispatch) {
+    dispatch(updatingPost())
+
+    try {
+      const post = await svcUpdatePost(postId, postData)
+      dispatch(updatingPostSuccess(post))
+    } catch (err) {
+      dispatch(updatingPostError(err))
     }
   }
 }

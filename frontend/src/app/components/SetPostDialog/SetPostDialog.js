@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Modal, Form, Dropdown, Button } from 'semantic-ui-react'
-import { notNull } from 'app/utils/common'
+import { isEmpty, notNull } from 'app/utils/common'
 
-const { bool, object, func } = PropTypes
+const { string, bool, object, func } = PropTypes
 
 class SetPostDialog extends Component {
   static propTypes = {
+    mode: string.isRequired,
     isOpen: bool.isRequired,
     onClose: func.isRequired,
     categoryList: object.isRequired,
@@ -20,16 +21,34 @@ class SetPostDialog extends Component {
     body: '',
   }
 
-  componentWillMount () {
-    this.setState({
-      category: this.props.post.get('category') || 'react',
-      title: notNull(this.props.post.get('title')),
-      body: notNull(this.props.post.get('body')),
-    })
+  shouldComponentUpdate (nextProps, nextState) {
+    if (
+      this.props.isOpen !== nextProps.isOpen ||
+      this.state.category !== nextState.category ||
+      this.state.title !== nextState.title ||
+      this.state.body !== nextState.body
+    ) return true
+    else return false
   }
 
   componentDidMount () {
-    this.setState({isOpen: true})
+    this.setFormState()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.mode !== this.props.mode) {
+      this.setFormState()
+    }
+  }
+
+  setFormState = () => {
+    if (!isEmpty(this.props.post)) {
+      this.setState({
+        category: this.props.post.get('category') || 'react',
+        title: notNull(this.props.post.get('title')),
+        body: notNull(this.props.post.get('body')),
+      })
+    }
   }
 
   handleChange = (e) => {

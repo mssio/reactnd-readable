@@ -19,6 +19,7 @@ PostEntry.propTypes = {
   onUpvote: func.isRequired,
   onDownvote: func.isRequired,
   isEditable: bool.isRequired,
+  onEdit: func.isRequired,
 }
 
 export default function PostEntry (props) {
@@ -26,7 +27,7 @@ export default function PostEntry (props) {
 
   const editLink = props.isEditable
     ? <span style={styles.extraContentText}>
-        <Link to={`/${entry.get('category')}/${entry.get('id')}/edit`}>Edit</Link>
+        <a onClick={props.onEdit}>Edit</a>
       </span>
     : null
 

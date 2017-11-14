@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { openEditPost } from 'app/redux/actions/PostActions'
 import { PostEntry } from 'app/components'
 
 const { object } = PropTypes
@@ -28,17 +29,24 @@ class PostEntryContainer extends Component {
     })
   }
 
+  handleOpenEditPost = () => {
+    this.props.onOpenEditPost(this.props.entry)
+  }
+
   render () {
     const isEditable = this.props.username === this.props.entry.get('author')
 
     return (
-      <PostEntry
-        entry={this.props.entry}
-        isUpvoteDisabled={this.state.isUpvoteDisabled}
-        isDownvoteDisabled={this.state.isDownvoteDisabled}
-        onUpvote={this.handleUpvote}
-        onDownvote={this.handleDownvote}
-        isEditable={isEditable} />
+      <div>
+        <PostEntry
+          entry={this.props.entry}
+          isUpvoteDisabled={this.state.isUpvoteDisabled}
+          isDownvoteDisabled={this.state.isDownvoteDisabled}
+          onUpvote={this.handleUpvote}
+          onDownvote={this.handleDownvote}
+          isEditable={isEditable}
+          onEdit={this.handleOpenEditPost} />
+      </div>
     )
   }
 }
@@ -49,4 +57,10 @@ function mapStateToProps ({ UserReducer }) {
   }
 }
 
-export default connect(mapStateToProps)(PostEntryContainer)
+function mapDispatchToProps (dispatch) {
+  return {
+    onOpenEditPost: (post) => dispatch(openEditPost(post)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostEntryContainer)

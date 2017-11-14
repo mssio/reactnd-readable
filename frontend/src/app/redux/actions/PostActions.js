@@ -13,6 +13,10 @@ export const CREATING_POST = 'CREATING_POST'
 export const CREATING_POST_SUCCESS = 'CREATING_POST_SUCCESS'
 export const CREATING_POST_ERROR = 'CREATING_POST_ERROR'
 
+export const UPDATING_POST = 'UPDATING_POST'
+export const UPDATING_POST_SUCCESS = 'UPDATING_POST_SUCCESS'
+export const UPDATING_POST_ERROR = 'UPDATING_POST_ERROR'
+
 export function fetchingPostList () {
   return {
     type: FETCHING_POST_LIST,
@@ -76,6 +80,25 @@ export function creatingPostError (error) {
   console.warn('Creating post failed!')
   return {
     type: CREATING_POST_ERROR,
+    error,
+  }
+}
+
+export function updatingPost () {
+  return {
+    type: UPDATING_POST,
+  }
+}
+export function updatingPostSuccess (post) {
+  return {
+    type: UPDATING_POST_SUCCESS,
+    post,
+  }
+}
+export function updatingPostError (error) {
+  console.warn('Updating post failed!')
+  return {
+    type: UPDATING_POST_ERROR,
     error,
   }
 }
