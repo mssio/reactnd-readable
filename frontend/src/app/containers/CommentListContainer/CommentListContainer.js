@@ -8,6 +8,7 @@ import {
   handleFetchCommentList,
   handleCreateComment,
 } from 'app/redux/creators/CommentActionCreator'
+import { handleShowPost } from 'app/redux/creators/PostActionCreator'
 import { Loading, CommentList } from 'app/components'
 
 const { string } = PropTypes
@@ -21,7 +22,7 @@ class CommentListContainer extends Component {
     this.props.handleFetchCommentList(this.props.postId)
   }
 
-  handleAddComment = (payload) => {
+  handleAddComment = async (payload) => {
 
     const newComment = {
       ...payload,
@@ -31,7 +32,8 @@ class CommentListContainer extends Component {
       id: uuidv4(),
     }
 
-    this.props.handleCreateComment(newComment)
+    await this.props.handleCreateComment(newComment)
+    await this.props.handleShowPost(this.props.postId)
   }
 
   commentSorter (a, b) {
@@ -64,6 +66,7 @@ function mapDispatchToProps (dispatch) {
   return {
     handleFetchCommentList: (postId) => dispatch(handleFetchCommentList(postId)),
     handleCreateComment: (postId, commentData) => dispatch(handleCreateComment(postId, commentData)),
+    handleShowPost: (postId) => dispatch(handleShowPost(postId)),
   }
 }
 

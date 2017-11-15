@@ -13,6 +13,10 @@ export const CREATING_POST = 'CREATING_POST'
 export const CREATING_POST_SUCCESS = 'CREATING_POST_SUCCESS'
 export const CREATING_POST_ERROR = 'CREATING_POST_ERROR'
 
+export const FETCHING_SINGLE_POST = 'FETCHING_SINGLE_POST'
+export const FETCHING_SINGLE_POST_SUCCESS = 'FETCHING_SINGLE_POST_SUCCESS'
+export const FETCHING_SINGLE_POST_ERROR = 'FETCHING_SINGLE_POST_ERROR'
+
 export const UPDATING_POST = 'UPDATING_POST'
 export const UPDATING_POST_SUCCESS = 'UPDATING_POST_SUCCESS'
 export const UPDATING_POST_ERROR = 'UPDATING_POST_ERROR'
@@ -92,6 +96,25 @@ export function creatingPostError (error) {
   console.warn('Creating post failed!')
   return {
     type: CREATING_POST_ERROR,
+    error,
+  }
+}
+
+export function fetchingSinglePost () {
+  return {
+    type: FETCHING_SINGLE_POST,
+  }
+}
+export function fetchingSinglePostSuccess (post) {
+  return {
+    type: FETCHING_SINGLE_POST_SUCCESS,
+    post,
+  }
+}
+export function fetchingSinglePostError (error) {
+  console.warn('Fetching a post failed!')
+  return {
+    type: FETCHING_SINGLE_POST_ERROR,
     error,
   }
 }

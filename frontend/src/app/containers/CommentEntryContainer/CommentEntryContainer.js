@@ -7,6 +7,7 @@ import {
   handleUpVoteComment,
   handleDownVoteComment,
 } from 'app/redux/creators/CommentActionCreator'
+import { handleShowPost } from 'app/redux/creators/PostActionCreator'
 import { CommentEntry } from 'app/components'
 
 const { object } = PropTypes
@@ -42,8 +43,9 @@ class CommentEntryContainer extends Component {
     this.props.openEditComment(this.props.entry)
   }
 
-  handleDeleteComment = () => {
-    this.props.handleDeleteComment(this.props.entry)
+  handleDeleteComment = async () => {
+    await this.props.handleDeleteComment(this.props.entry)
+    await this.props.handleShowPost(this.props.entry.get('parentId'))
   }
 
   render () {
@@ -75,6 +77,7 @@ function mapDispatchToProps (dispatch) {
     handleDeleteComment: (comment) => dispatch(handleDeleteComment(comment)),
     handleUpVoteComment: (commentId) => dispatch(handleUpVoteComment(commentId)),
     handleDownVoteComment: (commentId) => dispatch(handleDownVoteComment(commentId)),
+    handleShowPost: (postId) => dispatch(handleShowPost(postId)),
   }
 }
 

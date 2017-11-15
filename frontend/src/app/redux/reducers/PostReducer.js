@@ -11,6 +11,9 @@ import {
   CREATING_POST,
   CREATING_POST_SUCCESS,
   CREATING_POST_ERROR,
+  FETCHING_SINGLE_POST,
+  FETCHING_SINGLE_POST_SUCCESS,
+  FETCHING_SINGLE_POST_ERROR,
   UPDATING_POST,
   UPDATING_POST_SUCCESS,
   UPDATING_POST_ERROR,
@@ -30,6 +33,7 @@ const initialState = Map({
   isFetched: false,
   listError: '',
   createError: '',
+  showError: '',
   updateError: '',
   deleteError: '',
   votingUpError: '',
@@ -140,6 +144,22 @@ export default function post (state = initialState, action) {
       return state.merge({
         isLoading: false,
         createError: action.error,
+      })
+    case FETCHING_SINGLE_POST:
+      return state.merge({
+        isLoading: true,
+      })
+    case FETCHING_SINGLE_POST_SUCCESS:
+      return state.merge({
+        isLoading: false,
+        showError: '',
+        postList: state.get('postList').set(action.post.id, Map(action.post)),
+        filteredPostList: updateFilteredPostList(state.get('filteredPostList'), action.post),
+      })
+    case FETCHING_SINGLE_POST_ERROR:
+      return state.merge({
+        isLoading: false,
+        showError: action.error,
       })
     case UPDATING_POST:
       return state.merge({

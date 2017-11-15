@@ -6,6 +6,9 @@ import {
   creatingPost,
   creatingPostSuccess,
   creatingPostError,
+  fetchingSinglePost,
+  fetchingSinglePostSuccess,
+  fetchingSinglePostError,
   updatingPost,
   updatingPostSuccess,
   updatingPostError,
@@ -22,6 +25,7 @@ import {
 import {
   svcFetchAllPosts,
   svcCreatePost,
+  svcShowPost,
   svcUpdatePost,
   svcDeletePost,
   svcUpVotePost,
@@ -57,6 +61,19 @@ export function handleCreatePost (postData) {
       dispatch(creatingPostSuccess(post))
     } catch (err) {
       dispatch(creatingPostError(err))
+    }
+  }
+}
+
+export function handleShowPost (postId) {
+  return async function (dispatch) {
+    dispatch(fetchingSinglePost())
+
+    try {
+      const post = await svcShowPost(postId)
+      dispatch(fetchingSinglePostSuccess(post))
+    } catch (err) {
+      dispatch(fetchingSinglePostError(err))
     }
   }
 }

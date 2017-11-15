@@ -12,6 +12,11 @@ export function svcCreatePost (postData) {
     .post(`${readableApiUrl}/posts`, postData, readableApiHeaders)
     .then(res => res.data)
 }
+export function svcShowPost (postId) {
+  return axios
+    .get(`${readableApiUrl}/posts/${postId}`, readableApiHeaders)
+    .then(res => res.data)
+}
 export function svcUpdatePost (postId, postData) {
   return axios
     .put(`${readableApiUrl}/posts/${postId}`, postData, readableApiHeaders)
