@@ -5,7 +5,10 @@ import {
   unsetFilteredPostCategory,
   openNewPost,
 } from 'app/redux/actions/PostActions'
-import { handleFetchPostList } from 'app/redux/creators/PostActionCreator'
+import {
+  handleFetchPostList,
+  handleSortPostList,
+} from 'app/redux/creators/PostActionCreator'
 import { Loading, PostList } from 'app/components'
 
 class PostListContainer extends Component {
@@ -28,19 +31,38 @@ class PostListContainer extends Component {
     }
   }
 
-  postSorter (a, b) {
-    if (a.get('timestamp') < b.get('timestamp')) return 1
-    else return -1
+  handleChangeSort = (e, data) => {
+    console.log('Sort by', data.value)
+    this.props.handleSortPostList(data.value)
   }
 
   render () {
+    const sortOptions = [
+      {
+        text: 'Date',
+        value: 'date',
+      },
+      {
+        text: 'Score',
+        value: 'score',
+      },
+      {
+        text: 'Comments',
+        value: 'comments',
+      },
+    ]
+
     const posts = typeof(this.props.match.params.categoryId) === 'undefined'
-      ? this.props.posts.sort(this.postSorter).valueSeq()
-      : this.props.filteredPosts.sort(this.postSorter).valueSeq()
+      ? this.props.posts.valueSeq()
+      : this.props.filteredPosts.valueSeq()
 
     return this.props.isLoading
       ? <Loading />
-      : <PostList posts={posts} onOpenNewPost={this.props.onOpenNewPost} />
+      : <PostList
+          posts={posts}
+          onOpenNewPost={this.props.onOpenNewPost}
+          sortOptions={sortOptions}
+          onChangeSort={this.handleChangeSort} />
   }
 }
 
@@ -57,6 +79,7 @@ function mapDispatchToProps (dispatch) {
     setFilteredPostCategory: (categoryId) => dispatch(setFilteredPostCategory(categoryId)),
     unsetFilteredPostCategory: () => dispatch(unsetFilteredPostCategory()),
     handleFetchPostList: () => dispatch(handleFetchPostList()),
+    handleSortPostList: (sortBy) => dispatch(handleSortPostList(sortBy)),
     onOpenNewPost: () => dispatch(openNewPost()),
   }
 }
