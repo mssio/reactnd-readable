@@ -3,6 +3,9 @@ import {
   fetchingPostList,
   fetchingPostListSuccess,
   fetchingPostListError,
+  sortPostByDate,
+  sortPostByScore,
+  sortPostByComments,
   creatingPost,
   creatingPostSuccess,
   creatingPostError,
@@ -48,6 +51,24 @@ export function handleFetchPostList () {
       dispatch(fetchingPostListSuccess(normalizedPosts))
     } catch (err) {
       dispatch(fetchingPostListError(err))
+    }
+  }
+}
+
+export function handleSortPostList (sortBy) {
+  return function (dispatch) {
+    switch (sortBy) {
+      case 'date':
+        dispatch(sortPostByDate())
+        break
+      case 'score':
+        dispatch(sortPostByScore())
+        break
+      case 'comments':
+        dispatch(sortPostByComments())
+        break
+      default:
+        return
     }
   }
 }

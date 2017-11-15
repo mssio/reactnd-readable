@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button  } from 'semantic-ui-react'
+import { Button, Dropdown } from 'semantic-ui-react'
 import { PostEntryContainer } from 'app/containers'
 
 const styles = {
+  buttonContainer: {
+    marginBottom: '30px',
+  },
   listContainer: {
     listStyle: 'none',
     padding: 0,
@@ -13,11 +16,13 @@ const styles = {
   },
 }
 
-const { object, func } = PropTypes
+const { object, func, array } = PropTypes
 
 PostList.propTypes = {
   posts: object.isRequired,
   onOpenNewPost: func.isRequired,
+  sortOptions: array.isRequired,
+  onChangeSort: func.isRequired,
 }
 
 export default function PostList (props) {
@@ -25,7 +30,19 @@ export default function PostList (props) {
     <div>
       <h2>Post List</h2>
 
-      <Button primary content='New Post' onClick={props.onOpenNewPost} />
+      <div style={styles.buttonContainer}>
+        <Button primary content='New Post' onClick={props.onOpenNewPost} />
+      </div>
+
+      <div>
+        <Dropdown icon='sort' floating labeled button className='icon'
+          id='sort'
+          name='sort'
+          placeholder='Sort By'
+          selection
+          options={props.sortOptions}
+          onChange={props.onChangeSort} />
+      </div>
 
       <ul style={styles.listContainer}>
         {props.posts.map(post => (

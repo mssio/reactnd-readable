@@ -5,6 +5,10 @@ export const FETCHING_POST_LIST_ERROR = 'FETCHING_POST_LIST_ERROR'
 export const SET_FILTERED_POST_CATEGORY = 'SET_FILTERED_POST_CATEGORY'
 export const UNSET_FILTERED_POST_CATEGORY = 'UNSET_FILTERED_POST_CATEGORY'
 
+export const SORT_POST_BY_DATE = 'SORT_POST_BY_DATE'
+export const SORT_POST_BY_SCORE = 'SORT_POST_BY_SCORE'
+export const SORT_POST_BY_COMMENTS = 'SORT_POST_BY_COMMENTS'
+
 export const OPEN_NEW_POST = 'OPEN_NEW_POST'
 export const OPEN_EDIT_POST = 'OPEN_EDIT_POST'
 export const CLOSE_SET_POST = 'CLOSE_SET_POST'
@@ -61,6 +65,22 @@ export function setFilteredPostCategory (categoryId) {
 export function unsetFilteredPostCategory () {
   return {
     type: UNSET_FILTERED_POST_CATEGORY,
+  }
+}
+
+export function sortPostByDate () {
+  return {
+    type: SORT_POST_BY_DATE,
+  }
+}
+export function sortPostByScore () {
+  return {
+    type: SORT_POST_BY_SCORE,
+  }
+}
+export function sortPostByComments () {
+  return {
+    type: SORT_POST_BY_COMMENTS,
   }
 }
 

@@ -5,6 +5,9 @@ import {
   FETCHING_POST_LIST_ERROR,
   SET_FILTERED_POST_CATEGORY,
   UNSET_FILTERED_POST_CATEGORY,
+  SORT_POST_BY_DATE,
+  SORT_POST_BY_SCORE,
+  SORT_POST_BY_COMMENTS,
   OPEN_NEW_POST,
   OPEN_EDIT_POST,
   CLOSE_SET_POST,
@@ -49,6 +52,19 @@ const initialState = Map({
     post: Map({}),
   }),
 })
+
+function dateSorter (a, b) {
+  if (a.get('timestamp') < b.get('timestamp')) return 1
+  else return -1
+}
+function scoreSorter (a, b) {
+  if (a.get('voteScore') < b.get('voteScore')) return 1
+  else return -1
+}
+function commentsSorter (a, b) {
+  if (a.get('commentCount') < b.get('commentCount')) return 1
+  else return -1
+}
 
 function updateFilteredPostList (filteredPostState, post) {
   let updatedFilteredPostList
@@ -100,6 +116,21 @@ export default function post (state = initialState, action) {
     case UNSET_FILTERED_POST_CATEGORY:
       return state.merge({
         filteredPostList: Map({})
+      })
+    case SORT_POST_BY_DATE:
+      return state.merge({
+        postList: state.get('postList').sort(dateSorter),
+        filteredPostList: state.get('filteredPostList').sort(dateSorter),
+      })
+    case SORT_POST_BY_SCORE:
+      return state.merge({
+        postList: state.get('postList').sort(scoreSorter),
+        filteredPostList: state.get('filteredPostList').sort(scoreSorter),
+      })
+    case SORT_POST_BY_COMMENTS:
+      return state.merge({
+        postList: state.get('postList').sort(commentsSorter),
+        filteredPostList: state.get('filteredPostList').sort(commentsSorter),
       })
     case OPEN_NEW_POST:
       return state.merge({
