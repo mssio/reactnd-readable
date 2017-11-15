@@ -62,12 +62,10 @@ function mapStateToProps ({ CommentReducer, UserReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    handleFetchCommentList: (postId) => dispatch(handleFetchCommentList(postId)),
-    handleCreateComment: (postId, commentData) => dispatch(handleCreateComment(postId, commentData)),
-    handleShowPost: (postId) => dispatch(handleShowPost(postId)),
-  }
+const actions = {
+  handleFetchCommentList,
+  handleCreateComment,
+  handleShowPost,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentListContainer)
+export default connect(mapStateToProps, actions)(CommentListContainer)

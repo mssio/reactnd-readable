@@ -60,7 +60,7 @@ class PostListContainer extends Component {
       ? <Loading />
       : <PostList
           posts={posts}
-          onOpenNewPost={this.props.onOpenNewPost}
+          onOpenNewPost={this.props.openNewPost}
           sortOptions={sortOptions}
           onChangeSort={this.handleChangeSort} />
   }
@@ -74,14 +74,12 @@ function mapStateToProps ({ PostReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    setFilteredPostCategory: (categoryId) => dispatch(setFilteredPostCategory(categoryId)),
-    unsetFilteredPostCategory: () => dispatch(unsetFilteredPostCategory()),
-    handleFetchPostList: () => dispatch(handleFetchPostList()),
-    handleSortPostList: (sortBy) => dispatch(handleSortPostList(sortBy)),
-    onOpenNewPost: () => dispatch(openNewPost()),
-  }
+const actions = {
+  setFilteredPostCategory,
+  unsetFilteredPostCategory,
+  handleFetchPostList,
+  handleSortPostList,
+  openNewPost
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostListContainer)
+export default connect(mapStateToProps, actions)(PostListContainer)

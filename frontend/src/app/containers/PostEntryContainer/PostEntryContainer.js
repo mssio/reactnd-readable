@@ -39,7 +39,7 @@ class PostEntryContainer extends Component {
   }
 
   handleOpenEditPost = () => {
-    this.props.onOpenEditPost(this.props.entry)
+    this.props.openEditPost(this.props.entry)
   }
 
   handleDeletePost = () => {
@@ -71,13 +71,11 @@ function mapStateToProps ({ UserReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    onOpenEditPost: (post) => dispatch(openEditPost(post)),
-    handleDeletePost: (postId) => dispatch(handleDeletePost(postId)),
-    handleVoteUpPost: (postId) => dispatch(handleVoteUpPost(postId)),
-    handleVoteDownPost: (postId) => dispatch(handleVoteDownPost(postId)),
-  }
+const actions = {
+  openEditPost,
+  handleDeletePost,
+  handleVoteUpPost,
+  handleVoteDownPost,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostEntryContainer)
+export default connect(mapStateToProps, actions)(PostEntryContainer)
