@@ -93,12 +93,10 @@ function mapStateToProps ({CategoryReducer}) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    handleFetchCategoryList: () => dispatch(handleFetchCategoryList()),
-    setSelectedCategory: (selectedCategory) => dispatch(setSelectedCategory(selectedCategory)),
-    unsetSelectedCategory: () => dispatch(unsetSelectedCategory()),
-  }
+const actions = {
+  handleFetchCategoryList,
+  setSelectedCategory,
+  unsetSelectedCategory,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostContainer)
+export default connect(mapStateToProps, actions)(PostContainer)

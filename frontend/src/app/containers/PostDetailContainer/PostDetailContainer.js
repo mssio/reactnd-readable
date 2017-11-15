@@ -37,10 +37,4 @@ function mapStateToProps ({ PostReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    handleFetchPostList: () => dispatch(handleFetchPostList()),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetailContainer);
+export default connect(mapStateToProps, {handleFetchPostList})(PostDetailContainer);

@@ -29,7 +29,7 @@ import {
   VOTING_DOWN_POST,
   VOTING_DOWN_POST_SUCCESS,
   VOTING_DOWN_POST_ERROR,
-} from '../actions/PostActions'
+} from '../types/PostActionTypes'
 
 const initialState = Map({
   isLoading: true,

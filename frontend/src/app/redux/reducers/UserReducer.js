@@ -1,5 +1,5 @@
 import { Map } from 'immutable'
-import { SET_USERNAME } from '../actions/UserActions'
+import { SET_USERNAME } from '../types/UserActionTypes'
 
 const initialState = Map({
   username: ''

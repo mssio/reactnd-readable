@@ -5,7 +5,7 @@ import {
   FETCHING_CATEGORY_LIST_ERROR,
   SET_SELECTED_CATEGORY,
   UNSET_SELECTED_CATEGORY,
-} from '../actions/CategoryActions'
+} from '../types/CategoryActionTypes'
 
 const initialState = Map({
   isLoading: false,

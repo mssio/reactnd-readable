@@ -32,11 +32,9 @@ function mapStateToProps ({ UserReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    handleGetUsername: () => dispatch(handleGetUsername()),
-    handleSetUsername: (username) => dispatch(handleSetUsername(username)),
-  }
+const actions = {
+  handleGetUsername,
+  handleSetUsername,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginDialogContainer)
+export default connect(mapStateToProps, actions)(LoginDialogContainer)
