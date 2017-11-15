@@ -20,7 +20,7 @@ import {
   DOWN_VOTING_COMMENT,
   DOWN_VOTING_COMMENT_SUCCESS,
   DOWN_VOTING_COMMENT_ERROR,
-} from '../actions/CommentActions'
+} from '../types/CommentActionTypes'
 
 const initialState = Map({
   isLoading: true,

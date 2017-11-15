@@ -7,14 +7,14 @@ import { EditCommentDialog } from 'app/components'
 class EditCommentContainer extends Component {
   handleSubmit = async (payload) => {
     await this.props.handleUpdateComment(this.props.comment.get('id'), payload)
-    this.props.onClose()
+    this.props.closeEditComment()
   }
 
   render () {
     return (
       <EditCommentDialog
         isOpen={this.props.isOpen}
-        onClose={this.props.onClose}
+        onClose={this.props.closeEditComment}
         onSubmit={this.handleSubmit}
         comment={this.props.comment} />
     )
@@ -28,11 +28,9 @@ function mapStateToProps ({ CommentReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    onClose: () => dispatch(closeEditComment()),
-    handleUpdateComment: (commentId, commentData) => dispatch(handleUpdateComment(commentId, commentData)),
-  }
+const actions = {
+  closeEditComment,
+  handleUpdateComment,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditCommentContainer)
+export default connect(mapStateToProps, actions)(EditCommentContainer)

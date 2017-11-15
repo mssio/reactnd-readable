@@ -18,12 +18,12 @@ class SetPostDialogContainer extends Component {
       }
 
       await this.props.handleCreatePost(newPost)
-      this.props.onClose()
+      this.props.closeSetPost()
 
     } else if (this.props.mode === 'update') {
 
       await this.props.handleUpdatePost(this.props.post.get('id'), payload)
-      this.props.onClose()
+      this.props.closeSetPost()
 
     }
   }
@@ -33,7 +33,7 @@ class SetPostDialogContainer extends Component {
       <SetPostDialog
         mode={this.props.mode}
         isOpen={this.props.isOpen}
-        onClose={this.props.onClose}
+        onClose={this.props.closeSetPost}
         categoryList={this.props.categoryList}
         onSubmit={this.handleSubmit}
         post={this.props.post} />
@@ -54,12 +54,10 @@ function mapStateToProps ({ PostReducer, CategoryReducer, UserReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    onClose: () => dispatch(closeSetPost()),
-    handleCreatePost: (postData) => dispatch(handleCreatePost(postData)),
-    handleUpdatePost: (postId, postData) => dispatch(handleUpdatePost(postId, postData)),
-  }
+const actions = {
+  closeSetPost,
+  handleCreatePost,
+  handleUpdatePost,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SetPostDialogContainer)
+export default connect(mapStateToProps, actions)(SetPostDialogContainer)

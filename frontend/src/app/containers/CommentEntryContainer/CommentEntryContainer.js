@@ -71,14 +71,12 @@ function mapStateToProps ({ UserReducer }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    openEditComment: (comment) => dispatch(openEditComment(comment)),
-    handleDeleteComment: (comment) => dispatch(handleDeleteComment(comment)),
-    handleUpVoteComment: (commentId) => dispatch(handleUpVoteComment(commentId)),
-    handleDownVoteComment: (commentId) => dispatch(handleDownVoteComment(commentId)),
-    handleShowPost: (postId) => dispatch(handleShowPost(postId)),
-  }
+const actions = {
+  openEditComment,
+  handleDeleteComment,
+  handleUpVoteComment,
+  handleDownVoteComment,
+  handleShowPost,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentEntryContainer)
+export default connect(mapStateToProps, actions)(CommentEntryContainer)
