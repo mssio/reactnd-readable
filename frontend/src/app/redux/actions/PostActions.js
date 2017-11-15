@@ -5,6 +5,10 @@ export const FETCHING_POST_LIST_ERROR = 'FETCHING_POST_LIST_ERROR'
 export const SET_FILTERED_POST_CATEGORY = 'SET_FILTERED_POST_CATEGORY'
 export const UNSET_FILTERED_POST_CATEGORY = 'UNSET_FILTERED_POST_CATEGORY'
 
+export const SORT_POST_BY_DATE = 'SORT_POST_BY_DATE'
+export const SORT_POST_BY_SCORE = 'SORT_POST_BY_SCORE'
+export const SORT_POST_BY_COMMENTS = 'SORT_POST_BY_COMMENTS'
+
 export const OPEN_NEW_POST = 'OPEN_NEW_POST'
 export const OPEN_EDIT_POST = 'OPEN_EDIT_POST'
 export const CLOSE_SET_POST = 'CLOSE_SET_POST'
@@ -12,6 +16,10 @@ export const CLOSE_SET_POST = 'CLOSE_SET_POST'
 export const CREATING_POST = 'CREATING_POST'
 export const CREATING_POST_SUCCESS = 'CREATING_POST_SUCCESS'
 export const CREATING_POST_ERROR = 'CREATING_POST_ERROR'
+
+export const FETCHING_SINGLE_POST = 'FETCHING_SINGLE_POST'
+export const FETCHING_SINGLE_POST_SUCCESS = 'FETCHING_SINGLE_POST_SUCCESS'
+export const FETCHING_SINGLE_POST_ERROR = 'FETCHING_SINGLE_POST_ERROR'
 
 export const UPDATING_POST = 'UPDATING_POST'
 export const UPDATING_POST_SUCCESS = 'UPDATING_POST_SUCCESS'
@@ -60,6 +68,22 @@ export function unsetFilteredPostCategory () {
   }
 }
 
+export function sortPostByDate () {
+  return {
+    type: SORT_POST_BY_DATE,
+  }
+}
+export function sortPostByScore () {
+  return {
+    type: SORT_POST_BY_SCORE,
+  }
+}
+export function sortPostByComments () {
+  return {
+    type: SORT_POST_BY_COMMENTS,
+  }
+}
+
 export function openNewPost () {
   return {
     type: OPEN_NEW_POST,
@@ -92,6 +116,25 @@ export function creatingPostError (error) {
   console.warn('Creating post failed!')
   return {
     type: CREATING_POST_ERROR,
+    error,
+  }
+}
+
+export function fetchingSinglePost () {
+  return {
+    type: FETCHING_SINGLE_POST,
+  }
+}
+export function fetchingSinglePostSuccess (post) {
+  return {
+    type: FETCHING_SINGLE_POST_SUCCESS,
+    post,
+  }
+}
+export function fetchingSinglePostError (error) {
+  console.warn('Fetching a post failed!')
+  return {
+    type: FETCHING_SINGLE_POST_ERROR,
     error,
   }
 }

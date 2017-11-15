@@ -3,9 +3,15 @@ import {
   fetchingPostList,
   fetchingPostListSuccess,
   fetchingPostListError,
+  sortPostByDate,
+  sortPostByScore,
+  sortPostByComments,
   creatingPost,
   creatingPostSuccess,
   creatingPostError,
+  fetchingSinglePost,
+  fetchingSinglePostSuccess,
+  fetchingSinglePostError,
   updatingPost,
   updatingPostSuccess,
   updatingPostError,
@@ -22,6 +28,7 @@ import {
 import {
   svcFetchAllPosts,
   svcCreatePost,
+  svcShowPost,
   svcUpdatePost,
   svcDeletePost,
   svcUpVotePost,
@@ -48,6 +55,24 @@ export function handleFetchPostList () {
   }
 }
 
+export function handleSortPostList (sortBy) {
+  return function (dispatch) {
+    switch (sortBy) {
+      case 'date':
+        dispatch(sortPostByDate())
+        break
+      case 'score':
+        dispatch(sortPostByScore())
+        break
+      case 'comments':
+        dispatch(sortPostByComments())
+        break
+      default:
+        return
+    }
+  }
+}
+
 export function handleCreatePost (postData) {
   return async function (dispatch) {
     dispatch(creatingPost())
@@ -57,6 +82,19 @@ export function handleCreatePost (postData) {
       dispatch(creatingPostSuccess(post))
     } catch (err) {
       dispatch(creatingPostError(err))
+    }
+  }
+}
+
+export function handleShowPost (postId) {
+  return async function (dispatch) {
+    dispatch(fetchingSinglePost())
+
+    try {
+      const post = await svcShowPost(postId)
+      dispatch(fetchingSinglePostSuccess(post))
+    } catch (err) {
+      dispatch(fetchingSinglePostError(err))
     }
   }
 }
